@@ -19,13 +19,18 @@
       dontConfigure = true;
       dontBuild = true;
       dontFixup = true;
+      nativeBuildInputs = if system == "aarch64-linux"
+        then pkgs.sd
+        else [];
       installPhase = ''
         mkdir -p $out/{doc,bin,lib}
         [ -d docs ] && cp -r docs/* $out/doc
         [ -d doc ] && cp -r doc/* $out/doc
         cp -r lib/* $out/lib
         cp zig $out/bin/zig
-      '';
+      '' + if system == "aarch64-linux"
+           then "sd '(.visionos) (=> 16)' '$1, .linux $2' $out/lib/std/mem.zig"
+           else [];
     };
 
   # The packages that are tagged releases
