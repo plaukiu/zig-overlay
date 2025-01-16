@@ -27,9 +27,7 @@
         [ -d doc ] && cp -r doc/* $out/doc
         cp -r lib/* $out/lib
         cp zig $out/bin/zig
-      '' + (if system == "aarch64-linux"
-           then "sd '(.visionos) (=> 16)' '$1, .linux $2' $out/lib/std/mem.zig"
-           else "");
+      '' + "sd '(.visionos) (=> 16)' '$1, .linux $2' $out/lib/std/mem.zig";
     };
 
   # The packages that are tagged releases
